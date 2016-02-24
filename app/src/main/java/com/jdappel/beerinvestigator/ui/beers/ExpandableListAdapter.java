@@ -25,9 +25,9 @@ import butterknife.ButterKnife;
  */
 class ExpandableListAdapter extends BaseExpandableListAdapter {
 
+    private final LayoutInflater inflater;
     private List<String> headerList = Collections.emptyList();
     private Map<String, Beer> titleToBeer = Collections.emptyMap();
-    private final LayoutInflater inflater;
 
     ExpandableListAdapter(final LayoutInflater inflater) {
         this.inflater = inflater;

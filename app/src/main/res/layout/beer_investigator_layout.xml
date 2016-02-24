@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context=".ui.beers.BeerActivity">
 
     <EditText
+        android:id="@+id/searchView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchView"
         android:drawableLeft="@android:drawable/ic_menu_search"
         android:drawableStart="@android:drawable/ic_menu_search"
-        android:inputType="textNoSuggestions"
         android:hint="@string/search_hint"
-        android:textSize="16sp"
-        android:textColor="#000000" />
+        android:inputType="textNoSuggestions"
+        android:textColor="#000000"
+        android:textSize="16sp" />
 
     <ExpandableListView
+        android:id="@+id/expandableListView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/expandableListView" />
+        android:layout_height="fill_parent" />
 
 </LinearLayout>
