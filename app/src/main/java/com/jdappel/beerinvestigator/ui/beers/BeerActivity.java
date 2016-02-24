@@ -68,7 +68,6 @@ public class BeerActivity extends Activity implements BeerView {
         subscription = RxTextView.textChangeEvents(searchView)
                 .filter(event -> !TextUtils.isEmpty(event.text().toString()))
                 .map(event -> event.text().toString())
-                .throttleWithTimeout(100, TimeUnit.MILLISECONDS)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .onBackpressureLatest()
                 .observeOn(AndroidSchedulers.mainThread())

@@ -3,7 +3,7 @@ package com.jdappel.beerinvestigator.ui.beers;
 /**
  * Interface for defining the behavior of the presenter within this view.
  */
-public interface BeerPresenter {
+interface BeerPresenter {
 
     void searchBeers(String beerQuery);
 

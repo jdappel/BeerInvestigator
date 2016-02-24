@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Defines the behavior for interacting with the view vis-a-vis the presenter.
  */
-public interface BeerView {
+interface BeerView {
 
     void showBeers(List<Beer> beers);
 }

@@ -1,7 +1,5 @@
 package com.jdappel.beerinvestigator.rest;
 
-import com.annimon.stream.Stream;
-
 import org.junit.Before;
 import org.junit.Test;
 
