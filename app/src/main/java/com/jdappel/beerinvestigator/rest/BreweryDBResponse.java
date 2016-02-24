@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
- * Created by jappel on 2/20/2016.
+ * Generic Type for returning JSON data from BreweryDB
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BreweryDBResponse<T> {

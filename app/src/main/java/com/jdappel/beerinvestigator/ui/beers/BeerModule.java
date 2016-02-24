@@ -6,7 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by jappel on 2/21/2016.
+ * Module for constructing a {@link BeerPresenter} for injection into {@link BeerActivity}
  */
 @Module(injects = BeerActivity.class, complete = false)
 public class BeerModule {

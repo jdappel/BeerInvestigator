@@ -20,7 +20,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by jappel on 2/22/2016.
+ * Extension of {@link BaseExpandableListAdapter} to construct the necessary views and populate the
+ * {@link android.widget.ExpandableListView}
  */
 class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -36,13 +37,13 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
         headerList = Stream.of(beers).map(Beer::getName).collect(Collectors.toList());
         titleToBeer = new HashMap<>(beers.size());
-        Stream.of(beers).forEach(beer -> titleToBeer.put(beer.getName(),beer));
+        Stream.of(beers).forEach(beer -> titleToBeer.put(beer.getName(), beer));
     }
 
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        Beer child = (Beer) getChild(groupPosition,childPosition);
+        Beer child = (Beer) getChild(groupPosition, childPosition);
         DetailViewHolder holder;
         if (convertView != null) {
             holder = (DetailViewHolder) convertView.getTag();
@@ -112,7 +113,8 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     static class DetailViewHolder {
-        @Bind(R.id.beerListItem) TextView beerDetail;
+        @Bind(R.id.beerListItem)
+        TextView beerDetail;
 
         DetailViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -120,7 +122,8 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     static class HeaderViewHolder {
-        @Bind(R.id.beerListHeader) TextView beerHeader;
+        @Bind(R.id.beerListHeader)
+        TextView beerHeader;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);

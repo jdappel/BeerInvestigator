@@ -18,7 +18,7 @@ public class BeerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        objectGraph = ObjectGraph.create(new BreweryDBServiceModule(),new BeerModule());
+        objectGraph = ObjectGraph.create(new BreweryDBServiceModule(), new BeerModule());
     }
 
     public ObjectGraph getObjectGraph() {

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by jappel on 2/20/2016.
+ * Model class for style information related to a beer.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Style {

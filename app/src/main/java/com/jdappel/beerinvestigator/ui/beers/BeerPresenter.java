@@ -1,10 +1,11 @@
 package com.jdappel.beerinvestigator.ui.beers;
 
 /**
- * Created by jappel on 2/21/2016.
+ * Interface for defining the behavior of the presenter within this view.
  */
 public interface BeerPresenter {
 
     void searchBeers(String beerQuery);
+
     void setView(BeerView view);
 }

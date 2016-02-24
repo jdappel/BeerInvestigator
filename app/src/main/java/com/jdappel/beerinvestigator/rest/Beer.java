@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by jappel on 2/20/2016.
+ * Model class for Beer objects as pulled from BreweryDB.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Beer {

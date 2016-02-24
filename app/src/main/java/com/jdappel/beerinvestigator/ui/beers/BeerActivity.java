@@ -6,11 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.SearchView;
 
-import com.jakewharton.rxbinding.widget.RxSearchView;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.jdappel.beerinvestigator.BeerApplication;
 import com.jdappel.beerinvestigator.R;
 import com.jdappel.beerinvestigator.rest.Beer;
@@ -23,20 +20,22 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
- * Created by jappel on 2/21/2016.
+ * Main activity class that controls access to the UI components for this sample application.  Holds
+ * a reference to a {@link BeerPresenter} that is injected to access beer information.
  */
 public class BeerActivity extends Activity implements BeerView {
 
-    @Bind(R.id.searchView) EditText searchView;
-    @Bind(R.id.expandableListView) ExpandableListView expandableListView;
+    @Bind(R.id.searchView)
+    EditText searchView;
+    @Bind(R.id.expandableListView)
+    ExpandableListView expandableListView;
 
-    @Inject BeerPresenter beerPresenter;
+    @Inject
+    BeerPresenter beerPresenter;
 
     private ExpandableListAdapter listAdapter;
     private Subscription subscription;
@@ -69,10 +68,12 @@ public class BeerActivity extends Activity implements BeerView {
         subscription = RxTextView.textChangeEvents(searchView)
                 .filter(event -> !TextUtils.isEmpty(event.text().toString()))
                 .map(event -> event.text().toString())
+                .throttleWithTimeout(100, TimeUnit.MILLISECONDS)
                 .debounce(200, TimeUnit.MILLISECONDS)
+                .onBackpressureLatest()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(query -> beerPresenter.searchBeers(query),
-                           error -> Log.e(getClass().getName(),error.getMessage()));
+                        error -> Log.e(getClass().getName(), error.getMessage()));
     }
 
     @Override

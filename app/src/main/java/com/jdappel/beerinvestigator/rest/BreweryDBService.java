@@ -8,7 +8,8 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
- * Created by jappel on 2/20/2016.
+ * Package-private implementation class for constructing a REST client with {@code Retrofit} and
+ * {@code OkHttp}
  */
 class BreweryDBService {
 

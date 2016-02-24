@@ -5,7 +5,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by jappel on 2/20/2016.
+ * Defines the API endpoints that are used with {@code Retrofit} to access BreweryDB
  */
 public interface BreweryDBApi {
 

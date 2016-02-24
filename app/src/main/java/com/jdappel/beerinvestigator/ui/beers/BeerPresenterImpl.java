@@ -1,5 +1,7 @@
 package com.jdappel.beerinvestigator.ui.beers;
 
+import android.util.Log;
+
 import com.jdappel.beerinvestigator.rest.BreweryDBApi;
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse;
 
@@ -7,7 +9,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by jappel on 2/21/2016.
+ * Implements {@link BeerPresenter} to retrieve a list of beers based on the search criteria
+ * and populate the view.
  */
 class BeerPresenterImpl implements BeerPresenter {
 
@@ -31,6 +34,6 @@ class BeerPresenterImpl implements BeerPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(beers -> beerView.showBeers(beers),
-                           beers -> {});
+                        error -> Log.e(getClass().getName(), error.getMessage()));
     }
 }

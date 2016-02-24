@@ -5,7 +5,7 @@ import com.jdappel.beerinvestigator.rest.Beer;
 import java.util.List;
 
 /**
- * Created by jappel on 2/21/2016.
+ * Defines the behavior for interacting with the view vis-a-vis the presenter.
  */
 public interface BeerView {
 

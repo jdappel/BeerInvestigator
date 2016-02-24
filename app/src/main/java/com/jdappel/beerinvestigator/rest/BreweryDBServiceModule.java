@@ -4,7 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by jappel on 2/21/2016.
+ * {@code Dagger} module for constructing a REST client with {@code Retrofit}
  */
 @Module(library = true)
 public class BreweryDBServiceModule {
