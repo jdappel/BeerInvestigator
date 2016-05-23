@@ -2,17 +2,18 @@ package com.jdappel.beerinvestigator.ui.beers;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jdappel.beerinvestigator.BeerApplication;
 import com.jdappel.beerinvestigator.R;
 import com.jdappel.beerinvestigator.rest.Beer;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -31,14 +32,15 @@ public class BeerActivity extends Activity implements BeerView {
 
     @Bind(R.id.searchView)
     EditText searchView;
-    @Bind(R.id.expandableListView)
-    ExpandableListView expandableListView;
+    @Bind(R.id.listView)
+    RecyclerView listView;
 
     @Inject
     BeerPresenter beerPresenter;
 
-    private ExpandableListAdapter listAdapter;
+    private BeerListAdapter listAdapter;
     private Subscription subscription;
+    private RecyclerView.LayoutManager listLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,9 +50,12 @@ public class BeerActivity extends Activity implements BeerView {
 
         BeerApplication application = (BeerApplication) getApplication();
         application.getObjectGraph().inject(this);
-        listAdapter = new ExpandableListAdapter(getLayoutInflater());
-        listAdapter.setBeers(Collections.emptyList());
-        expandableListView.setAdapter(listAdapter);
+
+
+        listLayoutManager = new LinearLayoutManager(this);
+        listView.setLayoutManager(listLayoutManager);
+        listAdapter = new BeerListAdapter(new ArrayList<Beer>(), getLayoutInflater());
+        listView.setAdapter(listAdapter);
     }
 
     @Override
