@@ -3,6 +3,7 @@ package com.jdappel.beerinvestigator.ui.beers;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -22,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Main activity class that controls access to the UI components for this sample application.  Holds
@@ -56,11 +58,11 @@ public class BeerActivity extends Activity {
                 .filter(event -> !TextUtils.isEmpty(event.text().toString()))
                 .map(event -> event.text().toString())
                 .debounce(200, TimeUnit.MILLISECONDS)
-                .onBackpressureLatest();
+                .onBackpressureLatest().subscribeOn(AndroidSchedulers.mainThread());
 
         Observable<Boolean> checkBox = RxCompoundButton.checkedChanges(sortedCheckedBox)
                 .debounce(200, TimeUnit.MILLISECONDS)
-                .onBackpressureLatest();
+                .onBackpressureLatest().subscribeOn(AndroidSchedulers.mainThread());
 
         beerViewModel.subscribe(searchString, checkBox);
     }
@@ -68,7 +70,8 @@ public class BeerActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        subscription = beerViewModel.getBeers().subscribe(beers -> listAdapter.setBeers(beers));
+        subscription = beerViewModel.getBeers().observeOn(AndroidSchedulers.mainThread())
+                .subscribe(beers -> listAdapter.setBeers(beers), throwable -> Log.e("error", throwable.getMessage()));
     }
 
     @Override protected void onPause() {

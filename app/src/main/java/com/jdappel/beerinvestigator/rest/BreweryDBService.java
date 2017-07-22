@@ -6,6 +6,7 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import rx.schedulers.Schedulers;
 
 /**
  * Package-private implementation class for constructing a REST client with {@code Retrofit} and
@@ -15,7 +16,7 @@ class BreweryDBService {
 
     static BreweryDBApi createBreweryDBService(final String apiToken) {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addConverterFactory(JacksonConverterFactory.create())
                 .baseUrl("http://api.brewerydb.com/v2/");
 

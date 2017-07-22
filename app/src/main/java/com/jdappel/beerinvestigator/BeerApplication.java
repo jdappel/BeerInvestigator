@@ -3,7 +3,7 @@ package com.jdappel.beerinvestigator;
 import android.app.Application;
 
 import com.jdappel.beerinvestigator.rest.BreweryDBServiceModule;
-import com.jdappel.beerinvestigator.ui.beers.BeerModule;
+import com.jdappel.beerinvestigator.ui.viewmodel.impl.BeerModule;
 
 import dagger.ObjectGraph;
 

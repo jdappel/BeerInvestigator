@@ -1,5 +1,7 @@
 package com.jdappel.beerinvestigator.rest;
 
+import android.support.annotation.NonNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Model class for Beer objects as pulled from BreweryDB.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Beer {
+public class Beer implements Comparable<Beer> {
 
     private final String id;
     private final String description;
@@ -80,5 +82,9 @@ public class Beer {
         result = 31 * result + (abv != +0.0f ? Float.floatToIntBits(abv) : 0);
         result = 31 * result + style.hashCode();
         return result;
+    }
+
+    @Override public int compareTo(@NonNull Beer o) {
+        return getName().compareTo(o.getName());
     }
 }
