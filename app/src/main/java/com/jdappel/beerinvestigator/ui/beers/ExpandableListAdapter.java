@@ -36,14 +36,14 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
         headerList = FluentIterable.from(beers).transform(beer -> beer.getName()).toList();
         titleToBeer = new HashMap<>(beers.size());
-        for (Beer beer: beers) {
+        for (Beer beer : beers) {
             titleToBeer.put(beer.getName(), beer);
         }
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild,
+            View convertView, ViewGroup parent) {
         Beer child = (Beer) getChild(groupPosition, childPosition);
         DetailViewHolder holder;
         if (convertView != null) {
@@ -57,39 +57,32 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    @Override
-    public Object getChild(int groupPosition, int childPosititon) {
+    @Override public Object getChild(int groupPosition, int childPosititon) {
         return titleToBeer.get(headerList.get(groupPosition));
     }
 
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
+    @Override public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
-    @Override
-    public int getChildrenCount(int groupPosition) {
+    @Override public int getChildrenCount(int groupPosition) {
         return 1;
     }
 
-    @Override
-    public Object getGroup(int groupPosition) {
+    @Override public Object getGroup(int groupPosition) {
         return headerList.get(groupPosition);
     }
 
-    @Override
-    public int getGroupCount() {
+    @Override public int getGroupCount() {
         return this.headerList.size();
     }
 
-    @Override
-    public long getGroupId(int groupPosition) {
+    @Override public long getGroupId(int groupPosition) {
         return groupPosition;
     }
 
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
+    @Override public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+            ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         HeaderViewHolder holder;
         if (convertView != null) {
@@ -103,19 +96,16 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    @Override
-    public boolean hasStableIds() {
+    @Override public boolean hasStableIds() {
         return false;
     }
 
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
+    @Override public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
 
     static class DetailViewHolder {
-        @BindView(R.id.beerListItem)
-        TextView beerDetail;
+        @BindView(R.id.beerListItem) TextView beerDetail;
 
         DetailViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -123,8 +113,7 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     static class HeaderViewHolder {
-        @BindView(R.id.beerListHeader)
-        TextView beerHeader;
+        @BindView(R.id.beerListHeader) TextView beerHeader;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -1,5 +1,7 @@
 package com.jdappel.beerinvestigator.ui.viewmodel.impl;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.jdappel.beerinvestigator.rest.Beer;
 import com.jdappel.beerinvestigator.rest.BreweryDBApi;
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse;
@@ -35,14 +37,14 @@ class BeerViewModelImpl implements BeerViewModel {
         Observable<List<Beer>> finalList =
                 Observable.combineLatest(beers, checkbox, (list, isChecked) -> {
                     if (isChecked) {
-                        Collections.sort(list);
-                        return list;
+                        List<Beer> newList = Lists.newArrayList(list);
+                        Collections.sort(newList);
+                        return newList;
                     }
                     return list;
                 });
 
-        subscriptions.add(finalList.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subject::onNext));
+        subscriptions.add(finalList.subscribe(subject::onNext));
     }
 
     @Override public Observable<List<Beer>> getBeers() {
