@@ -5,17 +5,28 @@
     android:layout_height="fill_parent"
     tools:context=".ui.beers.BeerActivity">
 
+    <LinearLayout
+                  android:orientation="horizontal" android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchView"
-        android:drawableLeft="@android:drawable/ic_menu_search"
         android:drawableStart="@android:drawable/ic_menu_search"
         android:inputType="textNoSuggestions"
         android:hint="@string/search_hint"
         android:textSize="16sp"
         android:textColor="#000000" />
 
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="Sort"/>
+
+    </LinearLayout>
     <ExpandableListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

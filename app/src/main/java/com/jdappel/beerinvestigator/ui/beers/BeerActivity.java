@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,9 +29,9 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class BeerActivity extends Activity implements BeerView {
 
-    @Bind(R.id.searchView)
+    @BindView(R.id.searchView)
     EditText searchView;
-    @Bind(R.id.expandableListView)
+    @BindView(R.id.expandableListView)
     ExpandableListView expandableListView;
 
     @Inject
@@ -56,7 +56,6 @@ public class BeerActivity extends Activity implements BeerView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         if (subscription != null)
             subscription.unsubscribe();
     }
