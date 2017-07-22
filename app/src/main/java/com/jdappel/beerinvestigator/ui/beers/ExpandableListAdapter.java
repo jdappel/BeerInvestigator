@@ -6,8 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
+import com.google.common.collect.FluentIterable;
 import com.jdappel.beerinvestigator.R;
 import com.jdappel.beerinvestigator.rest.Beer;
 
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -35,9 +34,11 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     public void setBeers(List<Beer> beers) {
         notifyDataSetChanged();
-        headerList = Stream.of(beers).map(Beer::getName).collect(Collectors.toList());
+        headerList = FluentIterable.from(beers).transform(beer -> beer.getName()).toList();
         titleToBeer = new HashMap<>(beers.size());
-        Stream.of(beers).forEach(beer -> titleToBeer.put(beer.getName(), beer));
+        for (Beer beer: beers) {
+            titleToBeer.put(beer.getName(), beer);
+        }
     }
 
     @Override
@@ -113,7 +114,7 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     static class DetailViewHolder {
-        @Bind(R.id.beerListItem)
+        @BindView(R.id.beerListItem)
         TextView beerDetail;
 
         DetailViewHolder(View view) {
@@ -122,7 +123,7 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     static class HeaderViewHolder {
-        @Bind(R.id.beerListHeader)
+        @BindView(R.id.beerListHeader)
         TextView beerHeader;
 
         HeaderViewHolder(View view) {
