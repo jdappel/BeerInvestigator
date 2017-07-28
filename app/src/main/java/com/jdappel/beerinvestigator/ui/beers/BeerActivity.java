@@ -47,6 +47,7 @@ public class BeerActivity extends Activity {
         ButterKnife.bind(this);
 
         BeerApplication application = (BeerApplication) getApplication();
+
         application.getObjectGraph().inject(this);
         listAdapter = new ExpandableListAdapter(getLayoutInflater());
         listAdapter.setBeers(Collections.emptyList());

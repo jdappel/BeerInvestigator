@@ -1,7 +1,14 @@
 *.iml
 .gradle
 /local.properties
+<<<<<<< HEAD
 /.idea/**
+||||||| merged common ancestors
+/.idea/workspace.xml
+/.idea/libraries
+=======
+.idea/**
+>>>>>>> 2d6be3e7d49809b166a54e9a2654852dba69082f
 .DS_Store
 /build
 /captures
