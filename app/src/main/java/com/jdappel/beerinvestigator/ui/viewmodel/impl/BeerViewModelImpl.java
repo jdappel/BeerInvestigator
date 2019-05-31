@@ -1,6 +1,5 @@
 package com.jdappel.beerinvestigator.ui.viewmodel.impl;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.jdappel.beerinvestigator.rest.Beer;
 import com.jdappel.beerinvestigator.rest.BreweryDBApi;
@@ -10,8 +9,9 @@ import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 
@@ -25,7 +25,8 @@ class BeerViewModelImpl implements BeerViewModel {
     private final BehaviorSubject<List<Beer>> subject = BehaviorSubject.create();
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
-    public BeerViewModelImpl(final BreweryDBApi beerService) {
+    @Inject
+    BeerViewModelImpl(final BreweryDBApi beerService) {
         this.beerService = beerService;
     }
 

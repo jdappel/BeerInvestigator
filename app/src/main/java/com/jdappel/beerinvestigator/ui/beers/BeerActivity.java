@@ -1,6 +1,5 @@
 package com.jdappel.beerinvestigator.ui.beers;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +20,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.DaggerActivity;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,7 +30,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * a reference to a {@link com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel} that is injected
  * to access beer information.
  */
-public class BeerActivity extends Activity {
+public class BeerActivity extends DaggerActivity {
 
     @BindView(R.id.searchView) EditText searchView;
     @BindView(R.id.expandableListView) ExpandableListView expandableListView;
@@ -48,7 +48,6 @@ public class BeerActivity extends Activity {
 
         BeerApplication application = (BeerApplication) getApplication();
 
-        application.getObjectGraph().inject(this);
         listAdapter = new ExpandableListAdapter(getLayoutInflater());
         listAdapter.setBeers(Collections.emptyList());
         expandableListView.setAdapter(listAdapter);

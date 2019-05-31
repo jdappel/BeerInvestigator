@@ -1,27 +1,18 @@
 package com.jdappel.beerinvestigator;
 
-import android.app.Application;
+import com.jdappel.beerinvestigator.ui.DaggerAppComponent;
 
-import com.jdappel.beerinvestigator.rest.BreweryDBServiceModule;
-import com.jdappel.beerinvestigator.ui.viewmodel.impl.BeerModule;
-
-import dagger.ObjectGraph;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class BeerApplication extends Application {
-
-    private ObjectGraph objectGraph;
+public class BeerApplication extends DaggerApplication {
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        objectGraph = ObjectGraph.create(new BreweryDBServiceModule(), new BeerModule());
-    }
-
-    public ObjectGraph getObjectGraph() {
-        return objectGraph;
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().application(this).build();
     }
 }
