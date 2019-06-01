@@ -11,9 +11,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Implements {@link com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel} to retrieve a list of
@@ -23,7 +23,7 @@ class BeerViewModelImpl implements BeerViewModel {
 
     private final BreweryDBApi beerService;
     private final BehaviorSubject<List<Beer>> subject = BehaviorSubject.create();
-    private final CompositeSubscription subscriptions = new CompositeSubscription();
+    private final CompositeDisposable subscriptions = new CompositeDisposable();
 
     @Inject
     BeerViewModelImpl(final BreweryDBApi beerService) {
@@ -49,11 +49,11 @@ class BeerViewModelImpl implements BeerViewModel {
     }
 
     @Override public Observable<List<Beer>> getBeers() {
-        return subject.asObservable();
+        return subject;
     }
 
     @Override public void unsubscribe() {
-        if (subscriptions.hasSubscriptions())
+        if (!subscriptions.isDisposed())
             subscriptions.clear();
     }
 }

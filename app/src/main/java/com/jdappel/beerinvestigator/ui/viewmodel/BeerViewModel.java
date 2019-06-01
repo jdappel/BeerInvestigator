@@ -4,7 +4,7 @@ import com.jdappel.beerinvestigator.rest.Beer;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Interface for defining the behavior of the view model.

@@ -7,8 +7,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
-import com.jakewharton.rxbinding.widget.RxCompoundButton;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding2.widget.RxCompoundButton;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jdappel.beerinvestigator.BeerApplication;
 import com.jdappel.beerinvestigator.R;
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel;
@@ -21,9 +21,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.DaggerActivity;
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Main activity class that controls access to the UI components for this sample application.  Holds
@@ -39,7 +40,7 @@ public class BeerActivity extends DaggerActivity {
     @Inject BeerViewModel beerViewModel;
 
     private ExpandableListAdapter listAdapter;
-    private Subscription subscription;
+    private Disposable subscription;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +57,10 @@ public class BeerActivity extends DaggerActivity {
                 .filter(event -> !TextUtils.isEmpty(event.text().toString()))
                 .map(event -> event.text().toString())
                 .debounce(200, TimeUnit.MILLISECONDS)
-                .onBackpressureLatest()
                 .subscribeOn(AndroidSchedulers.mainThread());
 
         Observable<Boolean> checkBox = RxCompoundButton.checkedChanges(sortedCheckedBox)
                 .debounce(200, TimeUnit.MILLISECONDS)
-                .onBackpressureLatest()
                 .subscribeOn(AndroidSchedulers.mainThread());
 
         beerViewModel.subscribe(searchString, checkBox);
@@ -78,7 +77,7 @@ public class BeerActivity extends DaggerActivity {
     @Override protected void onPause() {
         super.onPause();
         if (subscription != null) {
-            subscription.unsubscribe();
+            subscription.dispose();
         }
     }
 
