@@ -46,15 +46,15 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild,
             View convertView, ViewGroup parent) {
         Beer child = (Beer) getChild(groupPosition, childPosition);
-        DetailViewHolder holder;
+        TextView view;
         if (convertView != null) {
-            holder = (DetailViewHolder) convertView.getTag();
+            view = (TextView) convertView;
         } else {
             ListItemDetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_detail, parent, false);
-            holder = new DetailViewHolder(binding.beerListItem);
+            view = binding.beerListItem;
         }
-        holder.beerDetail.setText(child.getDescription());
-        return convertView;
+        view.setText(child.getDescription());
+        return view;
     }
 
     @Override public Object getChild(int groupPosition, int childPosititon) {
@@ -84,16 +84,15 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
             ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
-        HeaderViewHolder holder;
+        TextView view;
         if (convertView != null) {
-            holder = (HeaderViewHolder) convertView.getTag();
+            view = (TextView) convertView;
         } else {
             ListItemHeaderBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_header, parent, false);
-            holder = new HeaderViewHolder(binding.beerListHeader);
-            convertView = binding.getRoot();
+            view = binding.beerListHeader;
         }
-        holder.beerHeader.setText(headerTitle);
-        return convertView;
+        view.setText(headerTitle);
+        return view;
     }
 
     @Override public boolean hasStableIds() {
