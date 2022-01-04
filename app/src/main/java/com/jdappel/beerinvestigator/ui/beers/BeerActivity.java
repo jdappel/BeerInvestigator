@@ -1,5 +1,6 @@
 package com.jdappel.beerinvestigator.ui.beers;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import dagger.android.DaggerActivity;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,11 +33,11 @@ import io.reactivex.disposables.Disposable;
  * a reference to a {@link com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel} that is injected
  * to access beer information.
  */
-public class BeerActivity extends DaggerActivity {
+public class BeerActivity extends Activity {
 
-    @BindView(R.id.searchView) EditText searchView;
-    @BindView(R.id.expandableListView) ExpandableListView expandableListView;
-    @BindView(R.id.checkBox) CheckBox sortedCheckedBox;
+    EditText searchView;
+    ExpandableListView expandableListView;
+    CheckBox sortedCheckedBox;
 
     @Inject BeerViewModel beerViewModel;
 
@@ -43,9 +45,9 @@ public class BeerActivity extends DaggerActivity {
     private Disposable subscription;
 
     @Override public void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beer_investigator_layout);
-        ButterKnife.bind(this);
 
         BeerApplication application = (BeerApplication) getApplication();
 
