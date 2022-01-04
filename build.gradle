@@ -1,40 +1,27 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 ext {
-    daggerVersion = "2.23.1"
+    daggerVersion = "2.40.5"
     retrofitVersion = "2.5.0"
     supportVersion = "28.0.0"
-    kotlinVersion = "1.6.0"
+    kotlinVersion = "1.6.10"
 }
 
 allprojects {
     buildscript {
         repositories {
-            flatDir {
-                dirs System.env.ANDROID_HOME + '/extras/android/m2repository/'
-            }
-            flatDir {
-                dirs System.env.ANDROID_HOME + '/extras/google/m2repository/'
-            }
             google()
-            jcenter()
+            mavenCentral()
             mavenLocal()
         }
         dependencies {
             classpath 'com.android.tools.build:gradle:4.2.1'
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-            classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlinVersion"
         }
     }
 
     repositories {
-        flatDir {
-            dirs System.env.ANDROID_HOME + '/extras/android/m2repository/'
-        }
-        flatDir {
-            dirs System.env.ANDROID_HOME + '/extras/google/m2repository/'
-        }
         google()
-        jcenter()
+        mavenCentral()
         mavenLocal()
     }
 
