@@ -3,7 +3,7 @@ ext {
     daggerVersion = "2.23.1"
     retrofitVersion = "2.5.0"
     supportVersion = "28.0.0"
-    kotlinVersion = "1.3.31"
+    kotlinVersion = "1.6.0"
 }
 
 allprojects {
@@ -20,7 +20,7 @@ allprojects {
             mavenLocal()
         }
         dependencies {
-            classpath 'com.android.tools.build:gradle:3.3.0'
+            classpath 'com.android.tools.build:gradle:4.2.1'
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
             classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlinVersion"
         }
