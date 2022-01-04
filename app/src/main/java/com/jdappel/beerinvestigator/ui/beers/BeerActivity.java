@@ -8,10 +8,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.jakewharton.rxbinding2.widget.RxCompoundButton;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jdappel.beerinvestigator.BeerApplication;
 import com.jdappel.beerinvestigator.R;
+import com.jdappel.beerinvestigator.databinding.BeerInvestigatorLayoutBinding;
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel;
 
 import java.util.Collections;
@@ -35,8 +38,6 @@ import io.reactivex.disposables.Disposable;
  */
 public class BeerActivity extends Activity {
 
-    EditText searchView;
-    ExpandableListView expandableListView;
     CheckBox sortedCheckedBox;
 
     @Inject BeerViewModel beerViewModel;
@@ -47,21 +48,21 @@ public class BeerActivity extends Activity {
     @Override public void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.beer_investigator_layout);
+        BeerInvestigatorLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.beer_investigator_layout);
 
         BeerApplication application = (BeerApplication) getApplication();
 
         listAdapter = new ExpandableListAdapter(getLayoutInflater());
         listAdapter.setBeers(Collections.emptyList());
-        expandableListView.setAdapter(listAdapter);
+        binding.expandableListView.setAdapter(listAdapter);
 
-        Observable<String> searchString = RxTextView.textChangeEvents(searchView)
+        Observable<String> searchString = RxTextView.textChangeEvents(binding.searchView)
                 .filter(event -> !TextUtils.isEmpty(event.text().toString()))
                 .map(event -> event.text().toString())
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread());
 
-        Observable<Boolean> checkBox = RxCompoundButton.checkedChanges(sortedCheckedBox)
+        Observable<Boolean> checkBox = RxCompoundButton.checkedChanges(binding.checkBox)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread());
 

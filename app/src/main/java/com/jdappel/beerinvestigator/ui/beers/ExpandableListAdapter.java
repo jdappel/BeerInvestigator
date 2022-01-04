@@ -6,17 +6,18 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.google.common.collect.FluentIterable;
+import androidx.databinding.DataBindingUtil;
+
 import com.jdappel.beerinvestigator.R;
+import com.jdappel.beerinvestigator.databinding.ListItemDetailBinding;
+import com.jdappel.beerinvestigator.databinding.ListItemHeaderBinding;
 import com.jdappel.beerinvestigator.rest.Beer;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.stream.Collectors;
 
 /**
  * Extension of {@link BaseExpandableListAdapter} to construct the necessary views and populate the
@@ -34,7 +35,7 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     public void setBeers(List<Beer> beers) {
         notifyDataSetChanged();
-        headerList = FluentIterable.from(beers).transform(beer -> beer.getName()).toList();
+        headerList = beers.stream().map(beer -> beer.getName()).collect(Collectors.toList());
         titleToBeer = new HashMap<>(beers.size());
         for (Beer beer : beers) {
             titleToBeer.put(beer.getName(), beer);
@@ -49,9 +50,8 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView != null) {
             holder = (DetailViewHolder) convertView.getTag();
         } else {
-            convertView = inflater.inflate(R.layout.list_item_detail, parent, false);
-            holder = new DetailViewHolder(convertView);
-            convertView.setTag(holder);
+            ListItemDetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_detail, parent, false);
+            holder = new DetailViewHolder(binding.beerListItem);
         }
         holder.beerDetail.setText(child.getDescription());
         return convertView;
@@ -88,9 +88,9 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView != null) {
             holder = (HeaderViewHolder) convertView.getTag();
         } else {
-            convertView = inflater.inflate(R.layout.list_item_header, parent, false);
-            holder = new HeaderViewHolder(convertView);
-            convertView.setTag(holder);
+            ListItemHeaderBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_header, parent, false);
+            holder = new HeaderViewHolder(binding.beerListHeader);
+            convertView = binding.getRoot();
         }
         holder.beerHeader.setText(headerTitle);
         return convertView;
@@ -105,18 +105,18 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     static class DetailViewHolder {
-        @BindView(R.id.beerListItem) TextView beerDetail;
+        TextView beerDetail;
 
-        DetailViewHolder(View view) {
-            ButterKnife.bind(this, view);
+        DetailViewHolder(TextView view) {
+            beerDetail = view;
         }
     }
 
     static class HeaderViewHolder {
-        @BindView(R.id.beerListHeader) TextView beerHeader;
+        TextView beerHeader;
 
-        HeaderViewHolder(View view) {
-            ButterKnife.bind(this, view);
+        HeaderViewHolder(TextView view) {
+            beerHeader = view;
         }
     }
 }
