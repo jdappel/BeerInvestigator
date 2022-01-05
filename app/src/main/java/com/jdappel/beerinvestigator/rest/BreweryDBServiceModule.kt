@@ -1,0 +1,19 @@
+package com.jdappel.beerinvestigator.rest
+
+import com.jdappel.beerinvestigator.rest.BreweryDBService.createBreweryDBService
+import com.jdappel.beerinvestigator.rest.BreweryDBApi
+import com.jdappel.beerinvestigator.rest.BreweryDBService
+import dagger.Module
+import dagger.Provides
+
+/**
+ * `Dagger` module for constructing a REST client with `Retrofit`
+ */
+@Module
+object BreweryDBServiceModule {
+    @JvmStatic
+    @Provides
+    fun provideBreweryAPI(): BreweryDBApi {
+        return createBreweryDBService("948fd17f5f5d6560f06d6533f18af582")
+    }
+}
