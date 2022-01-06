@@ -5,7 +5,6 @@ import com.jdappel.beerinvestigator.rest.BreweryDBServiceModule
 import dagger.android.AndroidInjectionModule
 import com.jdappel.beerinvestigator.ui.beers.ActivityModule
 import com.jdappel.beerinvestigator.ui.viewmodel.impl.BeerModule
-import com.jdappel.beerinvestigator.BeerApplication
 import dagger.Component
 
 @Singleton

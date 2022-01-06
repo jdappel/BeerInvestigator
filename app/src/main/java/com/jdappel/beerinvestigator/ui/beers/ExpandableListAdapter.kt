@@ -92,7 +92,4 @@ internal class ExpandableListAdapter(private val inflater: LayoutInflater) :
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
         return true
     }
-
-    internal class DetailViewHolder(var beerDetail: TextView)
-    internal class HeaderViewHolder(var beerHeader: TextView)
 }

@@ -9,7 +9,6 @@ import android.os.Bundle
 import dagger.android.AndroidInjection
 import androidx.databinding.DataBindingUtil
 import com.jdappel.beerinvestigator.R
-import com.jdappel.beerinvestigator.BeerApplication
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent
 import android.text.TextUtils
@@ -17,7 +16,6 @@ import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import com.jakewharton.rxbinding2.widget.RxCompoundButton
 import com.jdappel.beerinvestigator.databinding.BeerInvestigatorLayoutBinding
-import com.jdappel.beerinvestigator.rest.Beer
 import java.util.concurrent.TimeUnit
 
 /**
@@ -31,16 +29,14 @@ class BeerActivity : Activity() {
     @JvmField
     @Inject
     var beerViewModel: BeerViewModel? = null
-    private var listAdapter: ExpandableListAdapter? = null
+    private val listAdapter: ExpandableListAdapter = ExpandableListAdapter(layoutInflater)
     private var subscription: Disposable? = null
     public override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         val binding: BeerInvestigatorLayoutBinding =
             DataBindingUtil.setContentView(this, R.layout.beer_investigator_layout)
-        val application = application as BeerApplication
-        listAdapter = ExpandableListAdapter(layoutInflater)
-        listAdapter!!.setBeers(emptyList())
+        listAdapter.setBeers(emptyList())
         binding.expandableListView.setAdapter(listAdapter)
         val searchString = RxTextView.textChangeEvents(binding.searchView)
             .filter { event: TextViewTextChangeEvent ->
@@ -62,7 +58,7 @@ class BeerActivity : Activity() {
         subscription = beerViewModel!!.beers
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { beers -> listAdapter!!.setBeers(beers) }
+                { beers -> listAdapter.setBeers(beers) }
             ) { throwable: Throwable -> Log.e("error", throwable.message!!) }
     }
 

@@ -1,13 +1,12 @@
 package com.jdappel.beerinvestigator.rest
 
-import com.jdappel.beerinvestigator.rest.BreweryDBApi
+
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.schedulers.Schedulers
 import retrofit2.converter.jackson.JacksonConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.Interceptor
-import okhttp3.HttpUrl
 
 /**
  * Package-private implementation class for constructing a REST client with `Retrofit` and
@@ -19,7 +18,7 @@ internal object BreweryDBService {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(JacksonConverterFactory.create())
             .baseUrl("https://api.brewerydb.com/v2/")
-        if (!apiToken.isEmpty()) {
+        if (apiToken.isNotEmpty()) {
             val client = OkHttpClient.Builder().addInterceptor { chain: Interceptor.Chain ->
                 val request = chain.request()
                 val url = request.url().newBuilder().addQueryParameter("key", apiToken).build()

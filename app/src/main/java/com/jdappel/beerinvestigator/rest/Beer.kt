@@ -3,7 +3,7 @@ package com.jdappel.beerinvestigator.rest
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.jdappel.beerinvestigator.rest.Beer
+
 
 /**
  * Model class for Beer objects as pulled from BreweryDB.
