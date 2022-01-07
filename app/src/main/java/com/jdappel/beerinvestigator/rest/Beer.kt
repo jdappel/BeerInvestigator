@@ -28,7 +28,7 @@ data class Beer @JsonCreator constructor(
                 '}'
     }
 
-    override fun compareTo(o: Beer): Int {
-        return name?.compareTo(o.name?.let { it } ?: "") ?: -1
+    override fun compareTo(other: Beer): Int {
+        return name?.compareTo(other.name ?: "") ?: -1
     }
 }

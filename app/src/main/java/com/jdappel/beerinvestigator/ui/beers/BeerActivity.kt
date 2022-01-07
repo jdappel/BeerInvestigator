@@ -29,14 +29,15 @@ class BeerActivity : Activity() {
     @JvmField
     @Inject
     var beerViewModel: BeerViewModel? = null
-    private val listAdapter: ExpandableListAdapter = ExpandableListAdapter(layoutInflater)
+    private var listAdapter: ExpandableListAdapter? = null
     private var subscription: Disposable? = null
     public override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         val binding: BeerInvestigatorLayoutBinding =
             DataBindingUtil.setContentView(this, R.layout.beer_investigator_layout)
-        listAdapter.setBeers(emptyList())
+        listAdapter =  ExpandableListAdapter(layoutInflater)
+        listAdapter!!.setBeers(emptyList())
         binding.expandableListView.setAdapter(listAdapter)
         val searchString = RxTextView.textChangeEvents(binding.searchView)
             .filter { event: TextViewTextChangeEvent ->
@@ -58,7 +59,7 @@ class BeerActivity : Activity() {
         subscription = beerViewModel!!.beers
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { beers -> listAdapter.setBeers(beers) }
+                { beers -> listAdapter!!.setBeers(beers) }
             ) { throwable: Throwable -> Log.e("error", throwable.message!!) }
     }
 
