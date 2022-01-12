@@ -11,15 +11,15 @@ import dagger.android.AndroidInjector
  * status bar and navigation/system bar) with user interaction.
  */
 class BeerApplication : Application(), HasAndroidInjector {
-    @JvmField
     @Inject
-    var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>? = null
+    private lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
     override fun onCreate() {
         super.onCreate()
         DaggerAppComponent.create().inject(this)
     }
 
     override fun androidInjector(): AndroidInjector<Any> {
-        return dispatchingAndroidInjector!!
+        return dispatchingAndroidInjector
     }
 }
