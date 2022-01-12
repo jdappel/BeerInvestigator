@@ -36,7 +36,7 @@ class BeerActivity : Activity() {
         super.onCreate(savedInstanceState)
         val binding: BeerInvestigatorLayoutBinding =
             DataBindingUtil.setContentView(this, R.layout.beer_investigator_layout)
-        listAdapter =  ExpandableListAdapter(layoutInflater)
+        listAdapter = ExpandableListAdapter(layoutInflater)
         listAdapter!!.setBeers(emptyList())
         binding.expandableListView.setAdapter(listAdapter)
         val searchString = RxTextView.textChangeEvents(binding.searchView)

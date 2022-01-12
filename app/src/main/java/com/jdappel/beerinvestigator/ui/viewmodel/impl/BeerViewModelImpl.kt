@@ -22,7 +22,9 @@ internal class BeerViewModelImpl @Inject constructor(private val beerService: Br
     override fun subscribe(searchString: Observable<String>, checkbox: Observable<Boolean>) {
         val beers = searchString.flatMap { query: String? ->
             beerService.getBeers(query)
-                .filter { obs: BreweryDBResponse<Beer> -> obs.data?.let { it.isNotEmpty() } ?: false }
+                .filter { obs: BreweryDBResponse<Beer> ->
+                    obs.data?.let { it.isNotEmpty() } ?: false
+                }
                 .map { t -> t.data }
         }
         val finalList =
