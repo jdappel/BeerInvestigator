@@ -1,10 +1,8 @@
 package com.jdappel.beerinvestigator.ui.beers
 
 import android.app.Activity
-import android.widget.CheckBox
 import javax.inject.Inject
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
-import io.reactivex.disposables.Disposable
 import android.os.Bundle
 import dagger.android.AndroidInjection
 import androidx.databinding.DataBindingUtil
@@ -16,6 +14,7 @@ import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import com.jakewharton.rxbinding2.widget.RxCompoundButton
 import com.jdappel.beerinvestigator.databinding.BeerInvestigatorLayoutBinding
+import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
 /**
@@ -24,18 +23,18 @@ import java.util.concurrent.TimeUnit
  * to access beer information.
  */
 class BeerActivity : Activity() {
-    var sortedCheckedBox: CheckBox? = null
+
+    private lateinit var binding: BeerInvestigatorLayoutBinding
 
     @JvmField
     @Inject
     var beerViewModel: BeerViewModel? = null
     private var listAdapter: ExpandableListAdapter? = null
-    private var subscription: Disposable? = null
+    private val subscription: CompositeDisposable = CompositeDisposable()
     public override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        val binding: BeerInvestigatorLayoutBinding =
-            DataBindingUtil.setContentView(this, R.layout.beer_investigator_layout)
+        binding = DataBindingUtil.setContentView(this, R.layout.beer_investigator_layout)
         listAdapter = ExpandableListAdapter(layoutInflater)
         listAdapter!!.setBeers(emptyList())
         binding.expandableListView.setAdapter(listAdapter)
@@ -56,18 +55,16 @@ class BeerActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        subscription = beerViewModel!!.beers
+        subscription.add(beerViewModel!!.beers
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { beers -> listAdapter!!.setBeers(beers) }
-            ) { throwable: Throwable -> Log.e("error", throwable.message!!) }
+            ) { throwable: Throwable -> Log.e("error", throwable.message!!) })
     }
 
     override fun onPause() {
         super.onPause()
-        if (subscription != null) {
-            subscription!!.dispose()
-        }
+        subscription.clear()
     }
 
     override fun onDestroy() {

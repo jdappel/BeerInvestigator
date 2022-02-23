@@ -12,7 +12,7 @@ import dagger.android.AndroidInjector
  */
 class BeerApplication : Application(), HasAndroidInjector {
     @Inject
-    private lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+    internal lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate() {
         super.onCreate()
