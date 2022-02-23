@@ -24,8 +24,8 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 }
 
