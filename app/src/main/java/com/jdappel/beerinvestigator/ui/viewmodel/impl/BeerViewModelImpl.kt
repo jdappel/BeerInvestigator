@@ -1,5 +1,6 @@
 package com.jdappel.beerinvestigator.ui.viewmodel.impl
 
+import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 import com.jdappel.beerinvestigator.rest.BreweryDBApi
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
@@ -7,7 +8,6 @@ import io.reactivex.subjects.BehaviorSubject
 import com.jdappel.beerinvestigator.rest.Beer
 import io.reactivex.disposables.CompositeDisposable
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse
-import com.google.common.collect.Lists
 import io.reactivex.Observable
 import java.util.*
 
@@ -16,7 +16,7 @@ import java.util.*
  * beers based on the search criteria and populate the view.
  */
 internal class BeerViewModelImpl @Inject constructor(private val beerService: BreweryDBApi) :
-    BeerViewModel {
+    ViewModel(), BeerViewModel {
     private val subject = BehaviorSubject.create<List<Beer>>()
     private val subscriptions = CompositeDisposable()
     override fun subscribe(searchString: Observable<String>, checkbox: Observable<Boolean>) {
@@ -28,14 +28,12 @@ internal class BeerViewModelImpl @Inject constructor(private val beerService: Br
                 .map { t -> t.data }
         }
         val finalList =
-            Observable.combineLatest(beers, checkbox, { list: List<Beer>, isChecked: Boolean ->
+            Observable.combineLatest(beers, checkbox) { list: List<Beer>, isChecked: Boolean ->
                 if (isChecked) {
-                    val newList: List<Beer> = Lists.newArrayList(list)
-                    Collections.sort(newList)
-                    return@combineLatest newList
+                    return@combineLatest list.sorted()
                 }
                 list
-            })
+            }
         subscriptions.add(finalList.subscribe { t: List<Beer> -> subject.onNext(t) })
     }
 

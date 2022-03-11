@@ -26,9 +26,8 @@ class BeerActivity : Activity() {
 
     private lateinit var binding: BeerInvestigatorLayoutBinding
 
-    @JvmField
-    @Inject
-    var beerViewModel: BeerViewModel? = null
+
+    lateinit var beerViewModel: BeerViewModel
     private var listAdapter: ExpandableListAdapter? = null
     private val subscription: CompositeDisposable = CompositeDisposable()
     public override fun onCreate(savedInstanceState: Bundle?) {

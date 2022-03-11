@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 ext {
     daggerVersion = "2.40.5"
-    retrofitVersion = "2.5.0"
+    retrofitVersion = "2.9.0"
     supportVersion = "28.0.0"
     kotlinVersion = "1.6.10"
 }
@@ -14,7 +14,7 @@ allprojects {
             mavenLocal()
         }
         dependencies {
-            classpath 'com.android.tools.build:gradle:4.2.1'
+            classpath 'com.android.tools.build:gradle:4.2.2'
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         }
     }
