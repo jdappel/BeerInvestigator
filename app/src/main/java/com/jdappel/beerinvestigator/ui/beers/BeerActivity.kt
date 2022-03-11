@@ -11,9 +11,13 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent
 import android.text.TextUtils
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import com.jakewharton.rxbinding2.widget.RxCompoundButton
 import com.jdappel.beerinvestigator.databinding.BeerInvestigatorLayoutBinding
+import com.jdappel.beerinvestigator.di.ViewModelFactory
+import com.jdappel.beerinvestigator.ui.viewmodel.impl.BeerViewModelImpl
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
@@ -22,14 +26,17 @@ import java.util.concurrent.TimeUnit
  * a reference to a [com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel] that is injected
  * to access beer information.
  */
-class BeerActivity : Activity() {
+class BeerActivity : AppCompatActivity() {
 
     private lateinit var binding: BeerInvestigatorLayoutBinding
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var beerViewModel: BeerViewModel
+    private lateinit var viewModel: BeerViewModelImpl
     private var listAdapter: ExpandableListAdapter? = null
     private val subscription: CompositeDisposable = CompositeDisposable()
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -49,12 +56,13 @@ class BeerActivity : Activity() {
         val checkBox = RxCompoundButton.checkedChanges(binding.checkBox)
             .debounce(200, TimeUnit.MILLISECONDS)
             .subscribeOn(AndroidSchedulers.mainThread())
-        beerViewModel!!.subscribe(searchString, checkBox)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(BeerViewModelImpl::class.java)
+        viewModel.subscribe(searchString, checkBox)
     }
 
     override fun onResume() {
         super.onResume()
-        subscription.add(beerViewModel!!.beers
+        subscription.add(viewModel.beers
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { beers -> listAdapter!!.setBeers(beers) }
@@ -68,6 +76,6 @@ class BeerActivity : Activity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        beerViewModel!!.unsubscribe()
+        viewModel.unsubscribe()
     }
 }

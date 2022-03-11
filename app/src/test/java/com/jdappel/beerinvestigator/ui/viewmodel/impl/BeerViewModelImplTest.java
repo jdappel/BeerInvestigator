@@ -1,6 +1,5 @@
 package com.jdappel.beerinvestigator.ui.viewmodel.impl;
 
-import com.google.common.collect.Lists;
 import com.jdappel.beerinvestigator.rest.Beer;
 import com.jdappel.beerinvestigator.rest.BreweryDBApi;
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse;
@@ -16,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class) public class BeerViewModelImplTest {
 
@@ -31,7 +30,7 @@ import rx.observers.TestSubscriber;
 
     }};
 
-    private List<Beer> sortedBeers = Lists.newArrayList(beers);
+    private List<Beer> sortedBeers = new ArrayList<>(beers);
 
     @Before public void setup() {
 
