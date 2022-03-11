@@ -1,5 +1,7 @@
 package com.jdappel.beerinvestigator.ui.viewmodel.impl
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 import com.jdappel.beerinvestigator.rest.BreweryDBApi
@@ -17,7 +19,7 @@ import java.util.*
  */
 internal class BeerViewModelImpl @Inject constructor(private val beerService: BreweryDBApi) :
     ViewModel(), BeerViewModel {
-    private val subject = BehaviorSubject.create<List<Beer>>()
+    private val subject = MutableLiveData<List<Beer>>()
     private val subscriptions = CompositeDisposable()
     override fun subscribe(searchString: Observable<String>, checkbox: Observable<Boolean>) {
         val beers = searchString.flatMap { query: String? ->
@@ -34,13 +36,14 @@ internal class BeerViewModelImpl @Inject constructor(private val beerService: Br
                 }
                 list
             }
-        subscriptions.add(finalList.subscribe { t: List<Beer> -> subject.onNext(t) })
+        subscriptions.add(finalList.subscribe { t: List<Beer> -> subject.postValue(t) })
     }
 
-    override val beers: Observable<List<Beer>>
+    override val beers: LiveData<List<Beer>>
         get() = subject
 
-    override fun unsubscribe() {
+    override fun onCleared() {
+        super.onCleared()
         if (!subscriptions.isDisposed) subscriptions.clear()
     }
 }

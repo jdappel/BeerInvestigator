@@ -1,5 +1,6 @@
 package com.jdappel.beerinvestigator.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import com.jdappel.beerinvestigator.rest.Beer
 import io.reactivex.Observable
 
@@ -8,6 +9,5 @@ import io.reactivex.Observable
  */
 interface BeerViewModel {
     fun subscribe(searchString: Observable<String>, checkbox: Observable<Boolean>)
-    val beers: Observable<List<Beer>>
-    fun unsubscribe()
+    val beers: LiveData<List<Beer>>
 }

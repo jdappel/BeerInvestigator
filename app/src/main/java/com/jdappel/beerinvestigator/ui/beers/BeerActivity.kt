@@ -62,20 +62,6 @@ class BeerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        subscription.add(viewModel.beers
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { beers -> listAdapter!!.setBeers(beers) }
-            ) { throwable: Throwable -> Log.e("error", throwable.message!!) })
-    }
-
-    override fun onPause() {
-        super.onPause()
-        subscription.clear()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.unsubscribe()
+        viewModel.beers.observe(this) { beers -> listAdapter!!.setBeers(beers) }
     }
 }
