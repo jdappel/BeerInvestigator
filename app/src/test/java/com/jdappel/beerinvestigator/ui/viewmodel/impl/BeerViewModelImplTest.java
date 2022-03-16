@@ -1,11 +1,15 @@
 package com.jdappel.beerinvestigator.ui.viewmodel.impl;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.Observer;
+
 import com.jdappel.beerinvestigator.rest.Beer;
 import com.jdappel.beerinvestigator.rest.BreweryDBApi;
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse;
 import com.jdappel.beerinvestigator.rest.Style;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -18,7 +22,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.subscribers.TestSubscriber;
 
-@RunWith(MockitoJUnitRunner.class) public class BeerViewModelImplTest {
+@RunWith(MockitoJUnitRunner.class)
+public class BeerViewModelImplTest {
 
     private BreweryDBApi api;
     private BeerViewModelImpl impl;
@@ -32,6 +37,9 @@ import io.reactivex.subscribers.TestSubscriber;
 
     private List<Beer> sortedBeers = new ArrayList<>(beers);
 
+    @Rule
+    public InstantTaskExecutorRule rule = new InstantTaskExecutorRule();
+
     @Before public void setup() {
 
         api = Mockito.mock(BreweryDBApi.class);
@@ -44,20 +52,20 @@ import io.reactivex.subscribers.TestSubscriber;
     public void testInitialResponse() {
         Observable<String> search = Observable.just("IP");
         Observable<Boolean> checked = Observable.just(false);
-        TestSubscriber<List<Beer>> subscriber = new TestSubscriber<>();
+        Observer<List<Beer>> subscriber = Mockito.mock(Observer.class);
         impl.subscribe(search, checked);
-        impl.getBeers().subscribe(subscriber);
-        subscriber.assertValue(beers);
+        impl.getBeers().observeForever(subscriber);
+        Mockito.verify(subscriber).onChanged(beers);
     }
 
     @Test
     public void testWithSorting() {
         Observable<String> search = Observable.just("IP");
         Observable<Boolean> checked = Observable.just(false, true);
-        TestSubscriber<List<Beer>> subscriber = new TestSubscriber<>();
+        Observer<List<Beer>> subscriber = Mockito.mock(Observer.class);
         impl.subscribe(search, checked);
-        impl.getBeers().subscribe(subscriber);
+        impl.getBeers().observeForever(subscriber);
         Collections.sort(sortedBeers);
-        subscriber.assertValue(sortedBeers);
+        Mockito.verify(subscriber).onChanged(sortedBeers);
     }
 }

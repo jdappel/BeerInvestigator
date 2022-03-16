@@ -36,7 +36,7 @@ internal class BeerViewModelImpl @Inject constructor(private val beerService: Br
                 }
                 list
             }
-        subscriptions.add(finalList.subscribe { t: List<Beer> -> subject.postValue(t) })
+        subscriptions.add(finalList.subscribe({ t: List<Beer> -> subject.postValue(t) }, {}))
     }
 
     override val beers: LiveData<List<Beer>>

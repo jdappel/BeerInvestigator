@@ -3,9 +3,10 @@ package com.jdappel.beerinvestigator.rest;
 import org.junit.Before;
 import org.junit.Test;
 
-import rx.Observable;
 
 import static org.junit.Assert.assertTrue;
+
+import io.reactivex.Observable;
 
 public class BreweryDBApiIT {
 
@@ -13,7 +14,7 @@ public class BreweryDBApiIT {
 
     @Before
     public void setup() {
-        service = BreweryDBService.createBreweryDBService("948fd17f5f5d6560f06d6533f18af582");
+        service = BreweryDBService.INSTANCE.createBreweryDBService("948fd17f5f5d6560f06d6533f18af582");
     }
 
     @Test
@@ -23,6 +24,6 @@ public class BreweryDBApiIT {
         Beer expected = new Beer("Uu2ExM",
                 "A big malty beer with caramel & toffee flavors that has a clean & smooth finish. \r\n\r\nIngredients: Imported German barley & wheat malt, Northern Brewer & Vanguard Hops.", "Goosinator Smoked Doppelbock 2007", 7.7f, style);
         beers.map(item -> item.getData()).forEach(System.out::println);
-        assertTrue(beers.map(item -> item.getData().contains(expected)).toBlocking().first());
+        assertTrue(beers.map(item -> item.getData().contains(expected)).blockingFirst());
     }
 }

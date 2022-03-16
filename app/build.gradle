@@ -53,5 +53,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 }
 
