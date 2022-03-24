@@ -3,6 +3,7 @@ package com.jdappel.beerinvestigator.ui.viewmodel.impl
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import javax.inject.Inject
 import com.jdappel.beerinvestigator.rest.BreweryDBApi
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
@@ -11,6 +12,11 @@ import com.jdappel.beerinvestigator.rest.Beer
 import io.reactivex.disposables.CompositeDisposable
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse
 import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.util.*
 
 /**
@@ -20,30 +26,25 @@ import java.util.*
 internal class BeerViewModelImpl @Inject constructor(private val beerService: BreweryDBApi) :
     ViewModel(), BeerViewModel {
     private val subject = MutableLiveData<List<Beer>>()
-    private val subscriptions = CompositeDisposable()
-    override fun subscribe(searchString: Observable<String>, checkbox: Observable<Boolean>) {
-        val beers = searchString.flatMap { query: String? ->
-            beerService.getBeers(query)
-                .filter { obs: BreweryDBResponse<Beer> ->
-                    obs.data?.let { it.isNotEmpty() } ?: false
-                }
-                .map { t -> t.data }
-        }
-        val finalList =
-            Observable.combineLatest(beers, checkbox) { list: List<Beer>, isChecked: Boolean ->
-                if (isChecked) {
-                    return@combineLatest list.sorted()
-                }
-                list
+    override fun subscribe(searchString: Flow<String>, checkbox: Flow<Boolean>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val searchResults: Flow<List<Beer>> = searchString.flatMapMerge { query: String? ->
+                beerService.getBeers(query)
+                    .filter { resp: Response<BreweryDBResponse<Beer>> ->
+                        resp.isSuccessful && resp.body()?.data?.isNotEmpty() == true
+                    }
+                    .map { t -> t.body()!!.data!! }
             }
-        subscriptions.add(finalList.subscribe({ t: List<Beer> -> subject.postValue(t) }, {}))
+            val pair = searchResults.combine(checkbox) { first, second -> first to second}
+            pair.collect {
+                    if (it.second) {
+                        subject.postValue(it.first.sorted())
+                    }
+                    subject.postValue(it.first)
+                }
+            }
     }
 
     override val beers: LiveData<List<Beer>>
         get() = subject
-
-    override fun onCleared() {
-        super.onCleared()
-        if (!subscriptions.isDisposed) subscriptions.clear()
-    }
 }

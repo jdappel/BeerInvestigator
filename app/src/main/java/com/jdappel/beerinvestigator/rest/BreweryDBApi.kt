@@ -4,6 +4,8 @@ import retrofit2.http.GET
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse
 import com.jdappel.beerinvestigator.rest.Beer
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 import retrofit2.http.Query
 
 /**
@@ -11,5 +13,5 @@ import retrofit2.http.Query
  */
 interface BreweryDBApi {
     @GET("http://api.brewerydb.com/v2/search?type=beer")
-    fun getBeers(@Query("q") query: String?): Observable<BreweryDBResponse<Beer>>
+    suspend fun getBeers(@Query("q") query: String?): Flow<Response<BreweryDBResponse<Beer>>>
 }
