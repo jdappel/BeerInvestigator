@@ -1,4 +1,4 @@
-package com.jdappel.beerinvestigator.rest
+package com.jdappel.beerinvestigator.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonCreator

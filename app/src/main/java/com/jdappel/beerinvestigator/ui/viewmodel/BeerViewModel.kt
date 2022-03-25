@@ -1,8 +1,7 @@
 package com.jdappel.beerinvestigator.ui.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.jdappel.beerinvestigator.rest.Beer
-import io.reactivex.Observable
+import com.jdappel.beerinvestigator.model.Beer
 import kotlinx.coroutines.flow.Flow
 
 /**

@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
+import com.jdappel.beerinvestigator.model.Beer;
+import com.jdappel.beerinvestigator.model.Style;
+
 import io.reactivex.Observable;
 
 public class BreweryDBApiIT {

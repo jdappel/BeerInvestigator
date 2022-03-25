@@ -3,10 +3,10 @@ package com.jdappel.beerinvestigator.ui.viewmodel.impl;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 
-import com.jdappel.beerinvestigator.rest.Beer;
+import com.jdappel.beerinvestigator.model.Beer;
 import com.jdappel.beerinvestigator.rest.BreweryDBApi;
 import com.jdappel.beerinvestigator.rest.BreweryDBResponse;
-import com.jdappel.beerinvestigator.rest.Style;
+import com.jdappel.beerinvestigator.model.Style;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BeerViewModelImplTest {
