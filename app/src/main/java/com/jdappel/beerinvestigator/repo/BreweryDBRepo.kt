@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface BreweryDBRepo {
 
-   suspend fun findBeers(query: String): Flow<Result<List<Beer>>>
+   fun findBeers(query: String): Flow<Result<List<Beer>>>
 }

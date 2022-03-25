@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 internal class BreweryDBRepoImpl @Inject constructor(private val beerService: BreweryDBApi) :
     BreweryDBRepo {
-    override suspend fun findBeers(query: String): Flow<Result<List<Beer>>> {
+    override fun findBeers(query: String): Flow<Result<List<Beer>>> {
         return flow {
             when (val result = safeApiCall { beerService.getBeers(query) }) {
                 is Result.Success -> {
