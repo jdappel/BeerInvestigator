@@ -3,7 +3,7 @@ package com.jdappel.beerinvestigator.ui.beers
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.BaseExpandableListAdapter
-import com.jdappel.beerinvestigator.model.Beer
+import com.jdappel.beerinvestigator.data.model.Beer
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil

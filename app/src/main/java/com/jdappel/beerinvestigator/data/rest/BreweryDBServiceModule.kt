@@ -1,6 +1,6 @@
-package com.jdappel.beerinvestigator.rest
+package com.jdappel.beerinvestigator.data.rest
 
-import com.jdappel.beerinvestigator.rest.BreweryDBService.createBreweryDBService
+import com.jdappel.beerinvestigator.data.rest.BreweryDBService.createBreweryDBService
 import dagger.Module
 import dagger.Provides
 

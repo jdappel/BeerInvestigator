@@ -1,4 +1,4 @@
-package com.jdappel.beerinvestigator.repo
+package com.jdappel.beerinvestigator.data.repo
 
 import dagger.Binds
 import dagger.Module

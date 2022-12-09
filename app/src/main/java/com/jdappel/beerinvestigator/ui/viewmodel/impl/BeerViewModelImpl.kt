@@ -5,17 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import javax.inject.Inject
-import com.jdappel.beerinvestigator.rest.BreweryDBApi
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
-import com.jdappel.beerinvestigator.model.Beer
-import com.jdappel.beerinvestigator.repo.BreweryDBRepo
-import com.jdappel.beerinvestigator.rest.BreweryDBResponse
-import com.jdappel.beerinvestigator.rest.Result
+import com.jdappel.beerinvestigator.data.model.Beer
+import com.jdappel.beerinvestigator.data.repo.BreweryDBRepo
+import com.jdappel.beerinvestigator.data.rest.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import retrofit2.Response
-import java.util.*
 
 /**
  * Implements [com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel] to retrieve a list of

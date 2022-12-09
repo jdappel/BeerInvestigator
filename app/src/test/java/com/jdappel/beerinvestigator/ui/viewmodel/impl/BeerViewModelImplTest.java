@@ -3,10 +3,10 @@ package com.jdappel.beerinvestigator.ui.viewmodel.impl;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 
-import com.jdappel.beerinvestigator.model.Beer;
-import com.jdappel.beerinvestigator.rest.BreweryDBApi;
-import com.jdappel.beerinvestigator.rest.BreweryDBResponse;
-import com.jdappel.beerinvestigator.model.Style;
+import com.jdappel.beerinvestigator.data.model.Beer;
+import com.jdappel.beerinvestigator.data.rest.BreweryDBApi;
+import com.jdappel.beerinvestigator.data.rest.BreweryDBResponse;
+import com.jdappel.beerinvestigator.data.model.Style;
 
 import org.junit.Before;
 import org.junit.Rule;

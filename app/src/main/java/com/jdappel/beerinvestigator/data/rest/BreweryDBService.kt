@@ -1,4 +1,4 @@
-package com.jdappel.beerinvestigator.rest
+package com.jdappel.beerinvestigator.data.rest
 
 
 import retrofit2.Retrofit
@@ -17,7 +17,7 @@ internal object BreweryDBService {
         val builder = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(JacksonConverterFactory.create())
-            .baseUrl("https://api.brewerydb.com/v2/")
+            .baseUrl("https://api.openbrewerydb.com/v2/")
         if (apiToken.isNotEmpty()) {
             val client = OkHttpClient.Builder().addInterceptor { chain: Interceptor.Chain ->
                 val request = chain.request()

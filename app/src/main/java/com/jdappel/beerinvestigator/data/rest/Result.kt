@@ -1,4 +1,4 @@
-package com.jdappel.beerinvestigator.rest
+package com.jdappel.beerinvestigator.data.rest
 
 sealed class Result<T>(
     val data: T? = null,

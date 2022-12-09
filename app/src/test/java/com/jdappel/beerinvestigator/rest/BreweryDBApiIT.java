@@ -6,8 +6,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-import com.jdappel.beerinvestigator.model.Beer;
-import com.jdappel.beerinvestigator.model.Style;
+import com.jdappel.beerinvestigator.data.rest.BreweryDBApi;
+import com.jdappel.beerinvestigator.data.rest.BreweryDBResponse;
+import com.jdappel.beerinvestigator.data.rest.BreweryDBService;
+import com.jdappel.beerinvestigator.data.model.Beer;
+import com.jdappel.beerinvestigator.data.model.Style;
 
 import io.reactivex.Observable;
 
