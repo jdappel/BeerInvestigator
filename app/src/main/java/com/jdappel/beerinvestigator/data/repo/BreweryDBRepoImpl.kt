@@ -1,6 +1,6 @@
 package com.jdappel.beerinvestigator.data.repo
 
-import com.jdappel.beerinvestigator.data.model.Beer
+import com.jdappel.beerinvestigator.data.model.Brewery
 import com.jdappel.beerinvestigator.data.network.BreweryDBApi
 import com.jdappel.beerinvestigator.data.network.Result
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 internal class BreweryDBRepoImpl @Inject constructor(private val beerService: BreweryDBApi) :
     BreweryDBRepo {
-    override fun findBeers(query: String): Flow<Result<List<Beer>>> {
+    override fun findBeers(query: String): Flow<Result<List<Brewery>>> {
         return flow {
             when (val result = safeApiCall { beerService.getBeers(query) }) {
                 is Result.Success -> {
@@ -20,7 +20,7 @@ internal class BreweryDBRepoImpl @Inject constructor(private val beerService: Br
                         emit(Result.Success(apiBinding.data ?: listOf()))
                     }
                 }
-                else -> emit(error<List<Beer>>("API error"))
+                else -> emit(error<List<Brewery>>("API error"))
             }
         }.flowOn(Dispatchers.IO)
     }

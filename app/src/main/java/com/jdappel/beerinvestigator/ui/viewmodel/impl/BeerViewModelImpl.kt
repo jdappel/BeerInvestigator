@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import javax.inject.Inject
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
-import com.jdappel.beerinvestigator.data.model.Beer
 import com.jdappel.beerinvestigator.data.repo.BreweryDBRepo
 import com.jdappel.beerinvestigator.data.network.Result
 import kotlinx.coroutines.Dispatchers

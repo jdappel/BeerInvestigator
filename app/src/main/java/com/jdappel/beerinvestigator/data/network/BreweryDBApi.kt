@@ -1,9 +1,8 @@
 package com.jdappel.beerinvestigator.data.network
 
-import retrofit2.http.GET
-import com.jdappel.beerinvestigator.data.model.Beer
-import com.jdappel.beerinvestigator.data.model.BreweryDBResponse
+import com.jdappel.beerinvestigator.data.model.Brewery
 import retrofit2.Response
+import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
@@ -11,7 +10,7 @@ import retrofit2.http.Query
  */
 interface BreweryDBApi {
     @GET("/breweries")
-    suspend fun getBeers(@Query("q") query: String?): Response<BreweryDBResponse<Beer>>
+    suspend fun getBeers(@Query("q") query: String?): Response<List<Brewery>>
 
     companion object {
         const val name = "by_name"
