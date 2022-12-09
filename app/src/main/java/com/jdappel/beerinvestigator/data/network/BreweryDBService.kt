@@ -1,4 +1,4 @@
-package com.jdappel.beerinvestigator.data.rest
+package com.jdappel.beerinvestigator.data.network
 
 
 import retrofit2.Retrofit
@@ -13,20 +13,13 @@ import okhttp3.Interceptor
  * `OkHttp`
  */
 internal object BreweryDBService {
-    fun createBreweryDBService(apiToken: String): BreweryDBApi {
+    fun createBreweryDBService(): BreweryDBApi {
         val builder = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(JacksonConverterFactory.create())
-            .baseUrl("https://api.openbrewerydb.com/v2/")
-        if (apiToken.isNotEmpty()) {
-            val client = OkHttpClient.Builder().addInterceptor { chain: Interceptor.Chain ->
-                val request = chain.request()
-                val url = request.url().newBuilder().addQueryParameter("key", apiToken).build()
-                val newReq = request.newBuilder().url(url).build()
-                chain.proceed(newReq)
-            }.build()
-            builder.client(client)
-        }
+            .baseUrl("https://api.openbrewerydb.com/")
+        val client = OkHttpClient.Builder().build()
+        builder.client(client)
         return builder.build().create(BreweryDBApi::class.java)
     }
 }

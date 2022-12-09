@@ -3,7 +3,7 @@ package com.jdappel.beerinvestigator
 import com.jdappel.beerinvestigator.di.ViewModelModule
 import com.jdappel.beerinvestigator.data.repo.RepoModule
 import javax.inject.Singleton
-import com.jdappel.beerinvestigator.data.rest.BreweryDBServiceModule
+import com.jdappel.beerinvestigator.data.network.BreweryDBServiceModule
 import dagger.android.AndroidInjectionModule
 import com.jdappel.beerinvestigator.ui.beers.ActivityModule
 import com.jdappel.beerinvestigator.ui.viewmodel.impl.BeerModule

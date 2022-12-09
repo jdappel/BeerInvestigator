@@ -1,6 +1,6 @@
-package com.jdappel.beerinvestigator.data.rest
+package com.jdappel.beerinvestigator.data.network
 
-import com.jdappel.beerinvestigator.data.rest.BreweryDBService.createBreweryDBService
+import com.jdappel.beerinvestigator.data.network.BreweryDBService.createBreweryDBService
 import dagger.Module
 import dagger.Provides
 
@@ -12,6 +12,6 @@ object BreweryDBServiceModule {
     @JvmStatic
     @Provides
     fun provideBreweryAPI(): BreweryDBApi {
-        return createBreweryDBService("948fd17f5f5d6560f06d6533f18af582")
+        return createBreweryDBService()
     }
 }

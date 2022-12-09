@@ -8,7 +8,7 @@ import javax.inject.Inject
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
 import com.jdappel.beerinvestigator.data.model.Beer
 import com.jdappel.beerinvestigator.data.repo.BreweryDBRepo
-import com.jdappel.beerinvestigator.data.rest.Result
+import com.jdappel.beerinvestigator.data.network.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

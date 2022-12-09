@@ -1,7 +1,6 @@
 package com.jdappel.beerinvestigator.ui.viewmodel.impl
 
 import com.jdappel.beerinvestigator.data.repo.BreweryDBRepo
-import com.jdappel.beerinvestigator.data.rest.BreweryDBApi
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
 
 import dagger.Module

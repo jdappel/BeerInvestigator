@@ -1,8 +1,8 @@
 package com.jdappel.beerinvestigator.data.repo
 
 import com.jdappel.beerinvestigator.data.model.Beer
-import com.jdappel.beerinvestigator.data.rest.BreweryDBApi
-import com.jdappel.beerinvestigator.data.rest.Result
+import com.jdappel.beerinvestigator.data.network.BreweryDBApi
+import com.jdappel.beerinvestigator.data.network.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

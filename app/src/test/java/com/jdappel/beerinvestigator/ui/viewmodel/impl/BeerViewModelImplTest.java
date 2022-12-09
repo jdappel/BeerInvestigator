@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 
 import com.jdappel.beerinvestigator.data.model.Beer;
-import com.jdappel.beerinvestigator.data.rest.BreweryDBApi;
-import com.jdappel.beerinvestigator.data.rest.BreweryDBResponse;
+import com.jdappel.beerinvestigator.data.network.BreweryDBApi;
+import com.jdappel.beerinvestigator.data.model.BreweryDBResponse;
 import com.jdappel.beerinvestigator.data.model.Style;
 
 import org.junit.Before;
