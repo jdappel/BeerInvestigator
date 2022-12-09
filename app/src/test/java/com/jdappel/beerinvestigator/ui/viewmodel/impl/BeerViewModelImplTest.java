@@ -43,7 +43,7 @@ public class BeerViewModelImplTest {
 
         api = Mockito.mock(BreweryDBApi.class);
         BreweryDBResponse<Beer> response = new BreweryDBResponse<>("success", beers);
-        Mockito.when(api.getBeers(Mockito.anyString())).thenReturn(Observable.just(response));
+        Mockito.when(api.getBreweries(Mockito.anyString())).thenReturn(Observable.just(response));
         impl = new BeerViewModelImpl(api);
     }
 
@@ -53,7 +53,7 @@ public class BeerViewModelImplTest {
         Observable<Boolean> checked = Observable.just(false);
         Observer<List<Beer>> subscriber = Mockito.mock(Observer.class);
         impl.subscribe(search, checked);
-        impl.getBeers().observeForever(subscriber);
+        impl.getBreweries().observeForever(subscriber);
         Mockito.verify(subscriber).onChanged(beers);
     }
 
@@ -63,7 +63,7 @@ public class BeerViewModelImplTest {
         Observable<Boolean> checked = Observable.just(false, true);
         Observer<List<Beer>> subscriber = Mockito.mock(Observer.class);
         impl.subscribe(search, checked);
-        impl.getBeers().observeForever(subscriber);
+        impl.getBreweries().observeForever(subscriber);
         Collections.sort(sortedBeers);
         Mockito.verify(subscriber).onChanged(sortedBeers);
     }

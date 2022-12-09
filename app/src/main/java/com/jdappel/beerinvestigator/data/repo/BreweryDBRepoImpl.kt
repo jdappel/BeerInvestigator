@@ -17,7 +17,7 @@ internal class BreweryDBRepoImpl @Inject constructor(
 
     override suspend fun findBreweries(query: String) {
         try {
-            val result = beerService.getBeers(query)
+            val result = beerService.getBreweries(query)
             if (result.isSuccessful) {
                 val body = result.body()
                 body?.let {

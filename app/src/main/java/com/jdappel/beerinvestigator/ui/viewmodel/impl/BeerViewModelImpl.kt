@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdappel.beerinvestigator.data.model.Brewery
+import com.jdappel.beerinvestigator.data.network.APIState
 import javax.inject.Inject
 import com.jdappel.beerinvestigator.ui.viewmodel.BeerViewModel
 import com.jdappel.beerinvestigator.data.repo.BreweryDBRepo
@@ -18,28 +19,24 @@ import kotlinx.coroutines.launch
  */
 internal class BeerViewModelImpl @Inject constructor(private val beerService: BreweryDBRepo) :
     ViewModel(), BeerViewModel {
-    private val subject = MutableLiveData<List<Brewery>>()
-    override fun subscribe(searchString: Flow<String>, checkbox: Flow<Boolean>) {
+
+    private val _breweries = MutableLiveData<List<Brewery>>()
+    override val breweries: LiveData<List<Brewery>> = _breweries
+
+    init {
         viewModelScope.launch(Dispatchers.IO) {
-//            val searchResults: Flow<List<Brewery>> = searchString.flatMapMerge { query: String ->
-//                beerService.findBreweries(query)
-//                    .map { result ->
-//                        when(result) {
-//                            is Result.Success -> result.data!!
-//                            else -> listOf()
-//                        }                        }
-//            }
-//            val pair = searchResults.combine(checkbox) { first, second -> first to second}
-//            pair.collect {
-//                    if (it.second) {
-//                        subject.postValue(it.first.sorted())
-//                    }
-//                    subject.postValue(it.first)
-//                }
-//            }
+            beerService.brewerySearchResults.collect { searchState ->
+                when (searchState) {
+                    is APIState.Success -> _breweries.value = searchState.data
+                    else -> {}
+                }
+            }
         }
     }
 
-    override val beers: LiveData<List<Brewery>>
-        get() = subject
+    override fun subscribe(searchString: Flow<String>, checkbox: Flow<Boolean>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            beerService.findBreweries(searchString.first())
+        }
+    }
 }

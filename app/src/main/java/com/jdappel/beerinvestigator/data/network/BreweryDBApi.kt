@@ -10,7 +10,7 @@ import retrofit2.http.Query
  */
 interface BreweryDBApi {
     @GET("/breweries/search")
-    suspend fun getBeers(@Query("query") query: String?): Response<List<Brewery>>
+    suspend fun getBreweries(@Query("query") query: String?): Response<List<Brewery>>
 
     companion object {
         const val name = "by_name"

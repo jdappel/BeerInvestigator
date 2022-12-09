@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.Flow
  */
 interface BeerViewModel {
     fun subscribe(searchString: Flow<String>, checkbox: Flow<Boolean>)
-    val beers: LiveData<List<Brewery>>
+    val breweries: LiveData<List<Brewery>>
 }
