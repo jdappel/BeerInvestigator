@@ -2,11 +2,12 @@ package com.jdappel.beerinvestigator.ui.beers
 
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.BaseExpandableListAdapter
 import android.view.ViewGroup
+import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.jdappel.beerinvestigator.R
+import com.jdappel.beerinvestigator.data.model.Brewery
 import com.jdappel.beerinvestigator.databinding.ListItemDetailBinding
 import com.jdappel.beerinvestigator.databinding.ListItemHeaderBinding
 
@@ -17,9 +18,9 @@ import com.jdappel.beerinvestigator.databinding.ListItemHeaderBinding
 internal class ExpandableListAdapter(private val inflater: LayoutInflater) :
     BaseExpandableListAdapter() {
     private var headerList = mutableListOf<String>()
-    private var titleToBeer: MutableMap<String, Beer> = hashMapOf()
+    private var titleToBeer: MutableMap<String, Brewery> = hashMapOf()
 
-    fun setBeers(beers: List<Beer>) {
+    fun setBeers(beers: List<Brewery>) {
         notifyDataSetChanged()
         titleToBeer = beers.filter { it.name != null }.associateBy { it.name!! }.toMutableMap()
         headerList = titleToBeer.keys.toMutableList()
@@ -29,7 +30,7 @@ internal class ExpandableListAdapter(private val inflater: LayoutInflater) :
         groupPosition: Int, childPosition: Int, isLastChild: Boolean,
         convertView: View?, parent: ViewGroup
     ): View {
-        val child = getChild(groupPosition, childPosition) as Beer
+        val child = getChild(groupPosition, childPosition) as Brewery
         val view =
             if (convertView != null) {
                 convertView as TextView
@@ -39,7 +40,7 @@ internal class ExpandableListAdapter(private val inflater: LayoutInflater) :
                 )
                 binding.beerListItem
             }
-        view.text = child.description
+        //view.text = child.description
         return view
     }
 

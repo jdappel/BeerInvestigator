@@ -1,10 +1,12 @@
 package com.jdappel.beerinvestigator.data.repo
 
 import com.jdappel.beerinvestigator.data.model.Brewery
-import com.jdappel.beerinvestigator.data.network.Result
-import kotlinx.coroutines.flow.Flow
+import com.jdappel.beerinvestigator.data.network.APIState
+import kotlinx.coroutines.flow.StateFlow
 
 interface BreweryDBRepo {
 
-    fun findBeers(query: String): Flow<Result<List<Brewery>>>
+    val brewerySearchResults : StateFlow<APIState<List<Brewery>>>
+
+    suspend fun findBreweries(query: String)
 }

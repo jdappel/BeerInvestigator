@@ -2,47 +2,34 @@ package com.jdappel.beerinvestigator.data.repo
 
 import com.jdappel.beerinvestigator.data.model.Brewery
 import com.jdappel.beerinvestigator.data.network.BreweryDBApi
-import com.jdappel.beerinvestigator.data.network.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import retrofit2.Response
+import com.jdappel.beerinvestigator.data.network.APIState
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
-internal class BreweryDBRepoImpl @Inject constructor(private val beerService: BreweryDBApi) :
-    BreweryDBRepo {
-    override fun findBeers(query: String): Flow<Result<List<Brewery>>> {
-        return flow {
-            when (val result = safeApiCall { beerService.getBeers(query) }) {
-                is Result.Success -> {
-                    result.data?.let { apiBinding ->
-                        emit(Result.Success(apiBinding.data ?: listOf()))
-                    }
-                }
-                else -> emit(error<List<Brewery>>("API error"))
-            }
-        }.flowOn(Dispatchers.IO)
-    }
+internal class BreweryDBRepoImpl @Inject constructor(
+    private val beerService: BreweryDBApi
+) : BreweryDBRepo {
 
+    private val state = MutableStateFlow<APIState<List<Brewery>>>(APIState.Initial())
+    override val brewerySearchResults
+        get() = state
 
-    private suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): Result<T> {
+    override suspend fun findBreweries(query: String) {
         try {
-            val response = apiCall()
-            if (response.isSuccessful) {
-                val body = response.body()
+            val result = beerService.getBeers(query)
+            if (result.isSuccessful) {
+                val body = result.body()
                 body?.let {
-                    return Result.Success(body)
+                    state.emit(APIState.Success(it))
                 }
             }
-            return error("${response.code()} ${response.message()}")
+
         } catch (e: Exception) {
-            return error(e.message ?: e.toString())
+            if (e is CancellationException) {
+                throw e
+            }
+            state.emit(APIState.Error(e.message))
         }
     }
-
-    private fun <T> error(errorMessage: String): Result<T> =
-        Result.Error("Api call failed $errorMessage")
-
-
 }

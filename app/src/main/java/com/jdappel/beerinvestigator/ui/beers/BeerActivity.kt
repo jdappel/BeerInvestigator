@@ -79,6 +79,6 @@ class BeerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.beers.observe(this) { beers -> listAdapter!!.setBeers(beers) }
+        ///viewModel.beers.observe(this) { beers -> listAdapter!!.setBeers(beers) }
     }
 }
