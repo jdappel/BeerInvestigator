@@ -9,8 +9,8 @@ import retrofit2.http.Query
  * Defines the API endpoints that are used with `Retrofit` to access BreweryDB
  */
 interface BreweryDBApi {
-    @GET("/breweries")
-    suspend fun getBeers(@Query("q") query: String?): Response<List<Brewery>>
+    @GET("/breweries/search")
+    suspend fun getBeers(@Query("query") query: String?): Response<List<Brewery>>
 
     companion object {
         const val name = "by_name"
