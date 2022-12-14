@@ -25,7 +25,7 @@ import io.reactivex.Observable;
 public class BeerViewModelImplTest {
 
     private BreweryDBApi api;
-    private BeerViewModelImpl impl;
+    private BreweryViewModelImpl impl;
     private List<Beer> beers = new ArrayList<Beer>() {{
 
         add(new Beer("1", "Great IPA", "Two Hearted Ale", 6.7f, new Style("1", "IPA", 6, 7.8f)));
@@ -43,8 +43,8 @@ public class BeerViewModelImplTest {
 
         api = Mockito.mock(BreweryDBApi.class);
         BreweryDBResponse<Beer> response = new BreweryDBResponse<>("success", beers);
-        Mockito.when(api.getBreweries(Mockito.anyString())).thenReturn(Observable.just(response));
-        impl = new BeerViewModelImpl(api);
+        Mockito.when(api.findBreweries(Mockito.anyString())).thenReturn(Observable.just(response));
+        impl = new BreweryViewModelImpl(api);
     }
 
     @Test

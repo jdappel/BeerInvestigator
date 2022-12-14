@@ -9,5 +9,7 @@ interface BreweryDBRepo {
 
     val brewerySearchResults : Flow<APIState<List<Brewery>>>
 
+    suspend fun initialize()
+
     suspend fun findBreweries(query: String)
 }

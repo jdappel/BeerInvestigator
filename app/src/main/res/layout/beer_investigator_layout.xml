@@ -6,7 +6,7 @@
 <LinearLayout
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".ui.beers.BeerActivity">
+    tools:context=".ui.breweries.BeerActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
